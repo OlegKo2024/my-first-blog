@@ -1,0 +1,36 @@
+# Python - файлы, связанные с Python
+# .pyc-файлы, __pycache__/, временные файлы (*~)
+*.pyc
+*~
+__pycache__
+
+# Env
+# Папки venv/, my_venv/, файл .env
+# .env — это конфигурационный файл, в котором хранятся переменные окружения (например, секретные ключи API, пароли к
+# базам данных, настройки подключения). Он создаётся вручную, если нужен для проекта
+.env
+my_venv/
+.venv/
+
+# Database
+db.sqlite3
+
+# Static folder at project root
+/static/
+
+# macOS
+._*
+.DS_Store
+.fseventsd
+.Spotlight-V100
+
+# Windows
+Thumbs.db*
+ehthumbs*.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Visual Studio
+.vscode/
+.history/
+*.code-workspace
