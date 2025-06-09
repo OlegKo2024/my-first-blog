@@ -14,9 +14,73 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(
+        'admin/',
+        admin.site.urls             # 1. Админка
+    ),
+    path(
+        '',                         # 2. Подключение URL из приложения app_blog
+        include('app_blog.urls')    # Django will now redirect everything that comes into 'http://127.0.0.1:8000/'
+                                    # to app_blog.urls and looks for further instructions there
+    ),
 ]
+
+"""
+This line means that for every URL that starts with admin/, Django will find a corresponding view. 
+In this case, we're including a lot of admin URLs so it isn't all packed into this small file – it's more readable.
+
+The urlpatterns list in Django is a fundamental component that defines URL routing — it maps specific URL paths to 
+corresponding views or other URL configurations. Let’s break down its components in the example:
+
+urlpatterns
+    What it is: A Python list that Django scans to match incoming HTTP request URLs against predefined patterns     
+
+path() Function
+    Source: Imported from django.urls (e.g., from django.urls import path). 
+    What it does: Defines a URL pattern with:
+        A string pattern ('admin/'): The URL path to match (relative to the root URL).
+        A target (admin.site.urls): What Django should execute/forward to when the URL is matched.
+        path(route, view, kwargs=None, name=None)
+        
+'admin/'
+    Route: A string pattern that matches URLs starting with admin/ (e.g., http://yoursite.com/admin/)
+admin.site.urls
+    Source: Imported from django.contrib.admin (e.g., from django.contrib import admin)
+    What it is: A predefined URL configuration for Django’s admin interface
+    Includes paths like admin/login/, and routes for model CRUD operations
+    How it works: When visiting /admin/, Django delegates further URL 
+    handling to the admin site’s built-in URLs:
+        В Django "admin site’s built-in URLs" — это не физический файл в вашем проекте, а динамически генерируемая 
+        коллекция URL-шаблонов, которые создаются автоматически классом AdminSite из модуля django.contrib.admin.
+
+C добавлением path('', include('app_blog.urls'))
+    Django will now redirect everything that comes into 'http://127.0.0.1:8000/' to app_blog.urls 
+    and looks for further instructions there.
+    Пользователь запрашивает URL, например:
+        http://yoursite.com/admin/      → Обрабатывается admin.site.urls
+        http://yoursite.com/            → Обрабатывается app_blog.urls
+        http://yoursite.com/about/      → Ищется в app_blog.urls
+        
+    Поиск совпадения (Matching)
+        Django проверяет urlpatterns сверху вниз:
+            Проверяет admin/:
+            Если URL начинается с admin/, делегирует оставшуюся часть (/ или /login/ и т.д.) admin.site.urls.
+                Например, для /admin/login/ Django: 
+                Отрезает admin/ → остаётся login/
+                Передаёт login/ в admin.site.urls для дальнейшего matching
+            Если URL не начинается с admin/, переходит к path('', ...):
+                '' (пустая строка) означает корневой путь (/)
+                include('blog.urls') говорит Django:
+                    Отрезать совпавшую часть (здесь — ничего, так как '').
+                    Передать оставшийся путь (весь URL) в blog.urls для дальнейшего matching
+        
+
+
+
+"""
