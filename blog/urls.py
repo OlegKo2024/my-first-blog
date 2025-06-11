@@ -21,12 +21,12 @@ from django.urls import path, include
 # idea here: we define pattens and if entered in browser and found below, then it goes to the specified view
 #     path('', include('app_blog.urls') - if '' look for a view in app_blog.urls'
 
-from myblog.app_blog.views import contact_view
+from app_blog.views import contact_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('app_blog.urls')),
-    path('contact/', contact_view)
+    path('contact/', contact_view),
+    path('', include('app_blog.urls'))
 ]
 
 """

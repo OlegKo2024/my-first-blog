@@ -52,5 +52,5 @@ def post_list(request):
 #         Возвращает HttpResponse с готовым HTML
 
 from django.http import HttpResponse
-def contact_view(*arcs, **quarcs):
+def contact_view(*args, **kwargs):
     return HttpResponse("<h1>Give me some break</h1")
