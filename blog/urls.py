@@ -18,17 +18,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# idea here: we define pattens and if entered in browser and found below, then it goes to the specified view
+#     path('', include('app_blog.urls') - if '' look for a view in app_blog.urls'
+
+from myblog.app_blog.views import contact_view
 
 urlpatterns = [
-    path(
-        'admin/',
-        admin.site.urls             # 1. Админка
-    ),
-    path(
-        '',                         # 2. Подключение URL из приложения app_blog
-        include('app_blog.urls')    # Django will now redirect everything that comes into 'http://127.0.0.1:8000/'
-                                    # to app_blog.urls and looks for further instructions there
-    ),
+    path('admin/', admin.site.urls),
+    path('', include('app_blog.urls')),
+    path('contact/', contact_view)
 ]
 
 """

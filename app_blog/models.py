@@ -20,9 +20,15 @@ class Post(models.Model):   # this line defines our model (it is an object)
                             # ставит 0.00 по уже # введенным данным и будет ставить по новым, если не определить
     featured        = models.BooleanField(default=False)
     created_date    = models.DateTimeField(default=timezone.now)    # this is a date and time
-    published_date  = models.DateTimeField(blank=True, null=True)   # blank=True - поле в форме может быть не указано - влияет на валидацию запроса
-                            # null=True - разрешает записывать NULL в базу данных, если значение не указано (в форме будет пусто)
-                            # blank=True - required, and shown in bold, null=False - can not be empty in the database
+    published_date  = models.DateTimeField(blank=True, null=True)
+                            #  blank — валидация на уровне формы
+                            # Значение	    Поведение
+                            # blank=True	Поле необязательно для заполнения в формах (админка, ModelForm). Можно оставить пустым.
+                            # blank=False	Поле обязательно к заполнению. Если оставить пустым — будет ошибка валидации.
+                            #  null — хранение в базе данных
+                            # Значение	    Поведение
+                            # null=True	    В базе данных будет храниться NULL (пустое значение). Разрешено отсутствие значения.
+                            # null=False	В базе запрещён NULL. Поле всегда должно иметь значение (например, текущую дату)
 
 # Вы абсолютно правы: класс Post(models.Model) определяет таблицу в базе данных. Django ORM (Object-Relational Mapping)
 # работает похоже на SQLAlchemy:

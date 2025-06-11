@@ -4,6 +4,11 @@ from django.shortcuts import render
 
 def post_list(request):
     return render(request, 'app_blog/post_list.html', {})
+    # Используем / слэш когда указываете путь к шаблону в файловой системе  (в этом случае для render), а не когда вызываем
+    # Django использует путь в файловой системе относительно директорий шаблонов (TEMPLATES['DIRS'] или app/templates/)
+    # Шаблоны ищутся в папке templates внутри приложения. Простое правило:
+        # Точка (.) — когда дело связано с Python-кодом (импорты, запуск, модули, классы).
+        # Слэш (/) — когда дело связано с файлами и папками (шаблоны, статика, медиа, настройки путей в ОС).
 
 # Это типичная view-функция в Django, которая обрабатывает HTTP-запрос и возвращает HTTP-ответ
 # def post_list(request):
@@ -45,3 +50,7 @@ def post_list(request):
 #         Загружает шаблон post_list.html.
 #         Рендерит его (подставляет переменные, если они есть).
 #         Возвращает HttpResponse с готовым HTML
+
+from django.http import HttpResponse
+def contact_view(*arcs, **quarcs):
+    return HttpResponse("<h1>Give me some break</h1")
