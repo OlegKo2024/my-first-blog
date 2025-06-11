@@ -55,5 +55,10 @@ def post_list(request):
 from django.http import HttpResponse
 
 
-def contact_view(*args, **kwargs):
+def contact_view(request, *args, **kwargs):
     return HttpResponse("<h1>Give me some break</h1")
+
+
+def about_view(request, *args, **kwargs):
+    #    return HttpResponse("<h1>Give me some break</h1")
+   return render(request, 'app_blog/about.html')
