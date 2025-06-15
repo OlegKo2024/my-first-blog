@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# То есть BASE_DIR — это корень проекта (myblog/).
 
 
 # Quick-start development settings - unsuitable for production
@@ -54,6 +55,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'blog.urls'
+# Это указывает Django, где искать корневой файл URL-маршрутов.
+# Поскольку blog — это Python-пакет (есть __init__.py), Django ищет urls.py внутри него.
+# Путь указывается относительно корня Python-модуля (то есть как будто myblog/ добавлен в PYTHONPATH)
 
 TEMPLATES = [
     {

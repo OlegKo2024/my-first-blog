@@ -62,3 +62,6 @@ def contact_view(request, *args, **kwargs):
 def about_view(request, *args, **kwargs):
     #    return HttpResponse("<h1>Give me some break</h1")
    return render(request, 'app_blog/about.html')
+
+def home_view(request, *args, **kwargs):
+   return render(request, 'app_blog/home.html')
