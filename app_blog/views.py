@@ -3,7 +3,10 @@ from django.shortcuts import render
 # Create your views here.
 
 def post_list(request):
-    return render(request, 'app_blog/post_list.html', {})
+    context = {
+        'title': 'Главная страница блога'                       # Передаем переменную title в базовый шаблон post_list.html
+    }
+    return render(request, 'app_blog/post_list.html', context)
     # Используем / слэш когда указываете путь к шаблону в файловой системе  (в этом случае для render), а не когда вызываем
     # Django использует путь в файловой системе относительно директорий шаблонов (TEMPLATES['DIRS'] или app/templates/)
     # Шаблоны ищутся в папке templates внутри приложения. Простое правило:
