@@ -1,7 +1,18 @@
 {% extends "app_blog/base.html" %}
 
 {% block content %}
-<h1>This about page</h1>
+<h1>This is about page</h1>
 {{ request.user.is_authenticated }}
 <p>This is about of this blog</p>
+
+<p>
+    {{ my_text }}, {{ my_number}}, {{ my_list }}
+</p>
+
+<ul>
+    {% for item in my_list %}
+        <li>{{ forloop.counter }} - {{ item }}</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
