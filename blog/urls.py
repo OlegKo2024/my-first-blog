@@ -22,12 +22,14 @@ from django.urls import path, include
 #     path('', include('app_blog.urls') - if '' look for a view in app_blog.urls'
 
 from app_blog.views import contact_view, about_view, home_view
+from app_product.views import product_detail_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('contact/', contact_view),
     path('about/', about_view),
     path('home/', home_view),
+    path('product/', product_detail_view),
     path('', include('app_blog.urls'))
 ]
 
