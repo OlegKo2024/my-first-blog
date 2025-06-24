@@ -1,9 +1,13 @@
 {% extends "app_blog/base.html" %}
 
 {% block content %}
-<h1>This is about page</h1>
+<h1>This is "about" page</h1>
+<h3>{{ my_text|capfirst|upper }}</h3>
 {{ request.user.is_authenticated }}
-<p>This is about of this blog</p>
+<p>This is about this blog</p>
+
+{{ my_html|safe }}
+{{ my_html|striptags|slugify }}
 
 <p>
     {{ my_text }}, {{ my_number}}, {{ my_list }}
@@ -11,7 +15,18 @@
 
 <ul>
     {% for item in my_list %}
-        <li>{{ forloop.counter }} - {{ item }}</li>
+        {% if item == 456 %}
+            <li>{{ forloop.counter }} - {{ item|add:44 }}</li>
+            {% comment %}
+                `|add:44` is a filter that adds 44 to the value.
+                For single-line comments, you could also use: {# item|add:44 is a filter #}
+                This comment is indented to match the `if` block.
+            {% endcomment %}
+        {% elif item == "abc" %}
+            <li>This is not a number</li>
+        {% else %}
+            <li>{{ forloop.counter }} - {{ item }}</li>
+        {% endif %}
     {% endfor %}
 </ul>
 
