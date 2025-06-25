@@ -74,3 +74,12 @@ def about_view(request, *args, **kwargs):
 
 def home_view(request, *args, **kwargs):
    return render(request, 'app_blog/home.html', {})
+
+from .models import Post
+
+def blog_detail_view(request):
+    obj = Post.objects.get(id=1)
+    context = {
+        'object': obj
+    }
+    return render(request, 'app_blog/blog.html', context)
