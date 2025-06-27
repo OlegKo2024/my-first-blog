@@ -73,7 +73,7 @@ class Post(models.Model):   # this line defines our model (it is an object)
     # В командах управления (management commands)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} (автор: {self.author})"
 
 # Вывод
 # Ваша модель Post — это таблица в БД с колонками author_id, title, text и т. д.

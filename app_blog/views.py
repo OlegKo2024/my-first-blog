@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def post_list(request):
+def post_list_00(request):
     context = {
         'title': 'Главная страница блога'                       # Передаем переменную title в базовый шаблон post_list.html
     }
@@ -12,6 +12,19 @@ def post_list(request):
     # Шаблоны ищутся в папке templates внутри приложения. Простое правило:
         # Точка (.) — когда дело связано с Python-кодом (импорты, запуск, модули, классы).
         # Слэш (/) — когда дело связано с файлами и папками (шаблоны, статика, медиа, настройки путей в ОС).
+
+from django.utils import timezone
+from .models import Post
+
+def post_list(request):
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    context = {
+        'title': 'Главная страница блога',
+        'post': posts
+    }
+    return render(request, 'app_blog/post_list.html', context)
+
+
 
 # Это типичная view-функция в Django, которая обрабатывает HTTP-запрос и возвращает HTTP-ответ
 # def post_list(request):

@@ -31,7 +31,7 @@ urlpatterns = [
     path('blog/', blog_detail_view),
     path('home/', home_view),
     path('product/', product_detail_view),
-    path('', include('app_blog.urls'))
+    path('posts/', include('app_blog.urls'))
 ]
 
 """
