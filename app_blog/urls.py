@@ -1,5 +1,6 @@
 from django.urls import path
-from . import views
+from . import views     # относительный импорт означает "текущий пакет app_blog", import views
+                        # абсолютный импорт был бы from app_blog import views
 
 
 urlpatterns = [
