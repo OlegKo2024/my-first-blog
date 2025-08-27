@@ -21,7 +21,7 @@ from django.urls import path, include
 # idea here: we define pattens and if entered in browser and found below, then it goes to the specified view
 #     path('', include('app_blog.urls') - if '' look for a view in app_blog.urls'
 
-from app_blog.views import contact_view, about_view, home_view, blog_detail_view    # абсолютный импорт from app_blog import views
+from app_blog.views import contact_view, about_view, home_view, blog_detail_view, html_rules    # абсолютный импорт from app_blog import views
                                                                                         # Как работает:
                                                                                         # Python ищет модуль app_blog в путях из sys.path
                                                                                         # Директория myblog/ есть в sys.path+
@@ -41,7 +41,8 @@ urlpatterns = [
     path('about/', about_view),
     path('blog/', blog_detail_view),
     path('home/', home_view),
-    path('product/', product_detail_view)
+    path('product/', product_detail_view),
+    path('html_rules/', html_rules)
 ]
 
 """

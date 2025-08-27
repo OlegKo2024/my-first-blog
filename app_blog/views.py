@@ -100,3 +100,6 @@ def blog_detail_view(request):
         'object': obj
     }
     return render(request, 'app_blog/blog.html', context)
+
+def html_rules(request):
+    return render(request, 'app_blog/html_rules.html', {})
