@@ -19,7 +19,7 @@ from .models import Post
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     context = {
-        'title': 'Blog list',
+        'title': 'Blog list (BL)',
         'post': posts
     }
     return render(request, 'app_blog/post_list.html', context)
@@ -86,7 +86,7 @@ def about_view(request, *args, **kwargs):
         'my_text': 'this is about my blog for you',
         'my_number': '+79067073192',
         'my_list': [123, 456, 789, 'abc'],
-        'my_html': '<h1>Hello World</h1>'
+        'my_html': '<h2>Hello World</h2>'
     }
     return render(request, 'app_blog/about.html', my_context)
 
@@ -102,4 +102,12 @@ def blog_detail_view(request):
     return render(request, 'app_blog/blog.html', context)
 
 def html_rules(request):
-    return render(request, 'app_blog/html_rules.html', {})
+    from datetime import date
+    posts = Post.objects.filter(
+        published_date__date__gte=date(2025, 9, 5)
+    ).order_by('published_date')
+    context = {
+        'title': 'BOOKMARK',
+        'posts': posts
+    }
+    return render(request, 'app_blog/html_rules.html', context)

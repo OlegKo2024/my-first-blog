@@ -42,7 +42,7 @@ urlpatterns = [
     path('blog/', blog_detail_view),
     path('home/', home_view),
     path('product/', product_detail_view),
-    path('html_rules/', html_rules)
+    path('html_rules/', html_rules),
 ]
 
 """
