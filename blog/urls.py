@@ -43,6 +43,7 @@ urlpatterns = [
     path('home/', home_view),
     path('product/', product_detail_view),
     path('html_rules/', html_rules),
+    path('new/', include('app_blog.urls'))
 ]
 
 """

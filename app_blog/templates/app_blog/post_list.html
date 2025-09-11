@@ -10,12 +10,16 @@
 </head>
 <body>
     <header>
-        <h1><a href="">Nikita & Oleg posts - "" обновить при нажатии</a></h1>
-    </header>
-    <header class="page-header">
-    <div class="container">
-        <h1><a href="/">Our Django Super Blog - "/" пойти на главную </a></h1>
-    </div>
+        <div class="header-container">
+            <a href="/" class="logo-link"><img src="{% static 'app_blog/images/python_3d_icon.png' %}"
+                           alt="Логотип Python"
+                           width="120"></a>
+            <h1><a href="/" class="site-title">Nikita & Oleg posts - "/" пойти на главную</a>
+            </h1>
+        </div>
+        <div class="page-header">
+            <h1><a href="" class="page-title">Our Django Super Blog - "" обновить при нажатии </a></h1>
+        </div>
     </header>
     <main>
         {% for item in post %}
@@ -27,22 +31,6 @@
             </article>
         {% endfor %}
     </main>
-    <main class="container">
-        <div class="row">
-            <div class="col">
-                {% for post in posts %}
-                    <article class="post">
-                        <time class="date">
-                            {{ post.published_date }}
-                        </time>
-                        <h2><a href="">{{ post.title }}</a></h2>
-                        <p>{{ post.text|linebreaksbr }}</p>
-                    </article>
-                {% endfor %}
-            </div>
-        </div>
-    </main>
-
     <p>{{ post }}</p>
 
     <ul>

@@ -88,10 +88,10 @@ class Post(models.Model):   # this line defines our model (it is шаблон (�
     # В командах управления (management commands)
 
     def __str__(self):
-        return f"{self.title} (автор: {self.author})"
+        return f"{self.title} published: {self.published_date} (автор: {self.author})"
 # Если в коде сделать:
-# book = Book.objects.get(id=1)
-# print(book)  # вызовется book.__str__()
+# post = Post.objects.get(id=1)
+# print(post)  # вызовется book.__str__()
 
 
 # Вывод

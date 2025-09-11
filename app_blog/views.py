@@ -111,3 +111,11 @@ def html_rules(request):
         'posts': posts
     }
     return render(request, 'app_blog/html_rules.html', context)
+
+def new(request):
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    context = {
+        'title': 'POSTS',
+        'posts': posts
+    }
+    return render(request, 'app_blog/new.html', context)
