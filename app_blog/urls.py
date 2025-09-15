@@ -5,5 +5,6 @@ from . import views     # относительный импорт означае
 
 urlpatterns = [
     path('', views.post_list, name='post_list'),
-    path('new/', views.new, name='new')
+    path('new/', views.new, name='new'),
+    path('post/<int:pk>/', views.post_detail, name='post_detail')
 ]

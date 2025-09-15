@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext">
+    <link rel="stylesheet" href="{% static 'css/new.css' %}">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <header class="page-header">
+        <div>
+            <a href="/" class="logo-link"><img src="{% static 'app_blog/images/python_3d_icon.png' %}" alt="Логотип" width="120"></a>
+        </div>
+        <div>
+            <h1><a href="" class="site-title">My Blog</a></h1>  <!-- класс site-title не работает, перебит классом page-header  -->
+        </div>
+        <nav class="navigation">
+            <a href="/home">Home</a>
+            <a href="/about">About</a>
+            <a href="/blog">Blog</a>
+            <a href="/admin">Admin</a>
+                            <!-- Блок переключения языка внутри навигации, но можно рядом с навигацией (отдельный блок)-->
+            <div class="language-switcher">
+                <a href="?lang=en" title="English"><img src="{% static 'app_blog/images/flag-uk.svg' %}" alt="English" width="24" height="24"></a>
+                <a href="?lang=ru" title="Русский"><img src="{% static 'app_blog/images/flag-ru.svg' %}" alt="Русский" width="24" height="24"></a>
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        <div class="row">
+            <div class="col">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>

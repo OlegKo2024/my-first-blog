@@ -1,36 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    {% load static %}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext">
-    <link rel="stylesheet" href="{% static 'css/new.css' %}">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <header class="page-header">
-        <div>
-            <a href="/" class="logo-link"><img src="{% static 'app_blog/images/python_3d_icon.png' %}" alt="Логотип Python" width="120"></a>
-        </div>
-            <h1><a href="/" class="site-title"">My Blog</a></h1>
-        </div>
-    </header>
-    <main class="container">
-        <div class="row">
-            <div class="col">
-                {% for item in posts %}
-                    <article class="post">
-                        <time class="date">
-                            {{ item.published_date }}
-                        </time>
-                        <h2><a href="">{{ item.title }}</a></h2>
-                        <p>{{ item.text|linebreaksbr }}</p>
-                    </article>
-                {% endfor %}
-            </div>
-        </div>
-    </main>
-    <footer>
-    </footer>
-</body>
-</html>
+{% extends "app_blog/base_new.html" %}
+
+{% block content %}
+    <h3>Here is NEW BLOG EXTENSION</h3>
+    {% for item in posts %}
+        <article class="post">
+            <time class="date">
+                {{ item.published_date }}
+            </time>
+            <h2><a href="{% url 'post_detail' pk=item.pk %}" class="new-link">{{ item.title }}</a></h2>
+            <!-- Что это: Генерация URL-адреса с помощью тега url. результате: Абсолютный путь к странице конкретного поста
+             Разберем по частям:
+                'post_detail' — имя маршрута (path name) из urls.py
+                pk=item.pk — передача параметра (первичный ключ поста)
+                item.pk — уникальный ID поста из базы данных-->
+            <p>{{ item.text|linebreaksbr }}</p>
+        </article>
+    {% endfor %}
+{% endblock %}
