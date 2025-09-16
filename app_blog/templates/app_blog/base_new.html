@@ -10,7 +10,7 @@
 <body>
     <header class="page-header">
         <div>
-            <a href="/" class="logo-link"><img src="{% static 'app_blog/images/python_3d_icon.png' %}" alt="Логотип" width="120"></a>
+            <a href="/" class="logo-link"><img src="{% static 'app_blog/images/ghostbusters-1.svg' %}" alt="Логотип" width="120"></a>
         </div>
         <div>
             <h1><a href="" class="site-title">My Blog</a></h1>  <!-- класс site-title не работает, перебит классом page-header  -->
@@ -21,9 +21,11 @@
             <a href="/blog">Blog</a>
             <a href="/admin">Admin</a>
                             <!-- Блок переключения языка внутри навигации, но можно рядом с навигацией (отдельный блок)-->
-            <div class="language-switcher">
+            <div class="language-switcher"> <!-- Стилизация -->
                 <a href="?lang=en" title="English"><img src="{% static 'app_blog/images/flag-uk.svg' %}" alt="English" width="24" height="24"></a>
                 <a href="?lang=ru" title="Русский"><img src="{% static 'app_blog/images/flag-ru.svg' %}" alt="Русский" width="24" height="24"></a>
+                <!-- title=... Когда пользователь наводит курсор на ссылку, появляется текст "English" или "Русский"
+                https://flagicons.lipis.dev/ -->
             </div>
         </nav>
     </header>
