@@ -115,7 +115,7 @@ def html_rules(request):
 def new(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     context = {
-        'title': 'POSTS',
+        'title': 'BLOG',
         'posts': posts
     }
     return render(request, 'app_blog/new.html', context)
@@ -123,3 +123,8 @@ def new(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'app_blog/post_detail.html', {'post': post})
+
+"""
+Функция post_detail ожидает получить на вход тот самый параметр pk, который был извлечен из URL (<int:pk>). 
+Без этого параметра она не сможет найти нужную запись в базе данных
+"""

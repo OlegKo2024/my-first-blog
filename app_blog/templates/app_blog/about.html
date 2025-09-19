@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>This is "about" page</h1>
-<h3>{{ my_text|capfirst|upper }}</h3>
+<h3>{{ my_text|upper }}</h3>
 {{ request.user.is_authenticated }}
 <p>This is about this blog</p>
 
