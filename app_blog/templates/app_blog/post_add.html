@@ -1,0 +1,31 @@
+{% extends 'app_blog/base_new.html' %}
+
+{% block content %}
+    <h2 class="new-post">New post</h2>
+<!-- ====== типичный шаблон Django для создания/редактирования формы ===== -->
+<!-- Общая структура тега <form> - контейнер элементов формы, собирают данные от пользователя, его составляющие:
+    Атрибуты формы (method, action, class и др.) - method="POST" class="post-form"
+    Защитные токены (CSRF protection) - {% csrf_token %}
+    Поля формы (генерируемые Django) - {{ form.as_p }}
+    Кнопка отправки (submit button) - <button type="submit" class="save btn btn-secondary">Save</button> -->
+    <form method="POST" class="post-form">{% csrf_token %}  <!-- токен защиты от межсайтовой подделки запросов -->
+        <!-- Django автоматически генерирует токен при рендеринге формы -->
+
+        {{ form.as_p }} <!-- Рендеринг формы Django -->
+        <!-- form - объект формы Django, созданный в view
+        .as_p - метод, который рендерит каждое поле формы внутри тега <p> -->
+
+        <button type="submit" class="save btn btn-secondary">Save Post</button>
+    </form>
+{% endblock %}
+
+<!-- We have to display the form. We can do that with (for example) {{ form.as_p }}.
+The line above needs to be wrapped with an HTML form element: <form method="POST">...</form>.
+We need a Save button. We do that with an HTML button: <button type="submit">Save</button>.
+And finally, just after the opening <form ...> tag we need to add {% csrf_token %} -
+Полный процесс работы:
+    Пользователь заходит на страницу → Django рендерит форму с CSRF-токеном
+    Пользователь заполняет поля → данные вводятся в сгенерированные поля
+    Пользователь нажимает "Save" → браузер отправляет POST-запрос с данными и CSRF-токеном
+    Django проверяет CSRF-токен → если ок, обрабатывает данные формы
+    Django валидирует данные → если данные корректны, сохраняет и перенаправляет пользователя->

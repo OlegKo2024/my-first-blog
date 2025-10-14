@@ -95,7 +95,7 @@ def home_view(request, *args, **kwargs):
 
 
 def blog_detail_view(request):
-    obj = Post.objects.get(id=1)
+    obj = Post.objects.get(id=5)
     context = {
         'object': obj
     }
@@ -113,18 +113,153 @@ def html_rules(request):
     return render(request, 'app_blog/html_rules.html', context)
 
 def new(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    posts_items = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date') # ← Переменная Python (QuerySet)
     context = {
-        'title': 'BLOG',
-        'posts': posts
+        'subtitle': 'LIST OF POSTS',
+        'posts': posts_items    # ← КЛЮЧ 'posts' : ЗНАЧЕНИЕ posts_items, который идет в new.html как связь в {% for item in posts %} - иначе не работает
     }
-    return render(request, 'app_blog/new.html', context)
+    return render(request, 'app_blog/new.html', context) # вместо переменной context можно в returns дать {'posts': posts_items})
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'app_blog/post_detail.html', {'post': post})
+    post_item = get_object_or_404(Post, pk=pk)
+    return render(request, 'app_blog/post_detail.html', {'post': post_item})
 
 """
 Функция post_detail ожидает получить на вход тот самый параметр pk, который был извлечен из URL (<int:pk>). 
 Без этого параметра она не сможет найти нужную запись в базе данных
 """
+
+from django.shortcuts import redirect  # ← добавить redirect
+from .forms import PostForm
+
+def post_add(request):
+    if request.method == "POST":
+        # Вот здесь данные из request.POST будут использованы!
+        form = PostForm(request.POST)  # ← Ключевое изменение!
+            # Почему не PostForm(request)?
+                # Объект request содержит МНОГО разной информации: Метод запроса, Cookies, Сессии, Пользователя
+                # и Данные формы (request.POST, request.FILES)
+                # Форма должна работать только с данными формы, а не со всем запросом.
+        if form.is_valid():
+            post = form.save(commit=False)  # Не сохранять сразу в БД - (commit=False) - двухшаговое сохранение:
+            # Создает объект в памяти, но НЕ сохраняет в базу, позволяет добавить дополнительные данные
+            # Требует явного вызова post.save() потом
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()                     # Теперь сохраняем в БД
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm()   # Создание экземпляра формы
+    return render(request, 'app_blog/post_add.html', {'form': form})
+    # 'form' - это произвольное имя переменной, которое вы выбираете сами
+
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)   # added post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)    # added instance=post
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'app_blog/post_edit.html', {'form': form})   # changed for 'app_blog/post_edit.html'
+
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        post.delete()  # ← Вот и всё удаление!
+        return redirect('new')  # Перенаправляем на список постов
+    return render(request, 'app_blog/post_delete.html', {'post': post})
+
+
+"""
+Итог процесса def post_add(request)::
+{'form': form} → создает словарь контекста
+render() → преобразует в объект Context Django
+Шаблон получает доступ к объекту формы через переменную form
+{{ form.as_p }} → вызывает методы объекта формы для генерации HTML
+Это и есть магия работы шаблонов Django - они "видят" Python объекты, переданные через контекст!
+
+Что происходит в деталях:
+1. Создание формы:
+    PostForm() вызывает конструктор класса формы Django (см. импорт from .forms import PostForm)
+    Создается не связанная (unbound) форма - то есть без привязанных к ней данных
+        Не связанная форма = чистый бланк анкеты (без заполненных данных)
+        Связанная форма = заполненная анкета с данными пользователя
+    Django создает объекты полей на основе определения формы
+Подготовка контекста:
+    Создается словарь контекста {'form': form}  
+    Объект формы добавляется в контекст шаблона
+2. Функция render() выполняет:
+def render(request, template_name, context=None, content_type=None, status=None):
+    # 1. Загрузка шаблона
+    template = loader.get_template(template_name)
+    # 2. Преобразование context в объект Context
+    if context is None:
+        context = {}
+    # Создается объект Context Django
+    context = Context(context, request=request)
+    # 3. Рендеринг шаблона с контекстом
+    content = template.render(context)
+    return HttpResponse(content, content_type=content_type, status=status)
+    Шаг 3: Визуализация процесса
+До вызова render():
+Memory:
+┌─────────────────┐
+│   form = PostForm()  │ → Объект формы в памяти Python
+└─────────────────┘
+После создания контекста:
+Context object:
+┌─────────────────────────────────┐
+│ Ключ    │ Значение              │
+├─────────────────────────────────┤
+│ 'form'  │ <PostForm object>     │ ← Теперь доступен в шаблоне
+│ 'request'│ <WSGIRequest object> │
+└─────────────────────────────────┘
+3. Шаг 3: Обработка наследования шаблонов
+{% extends 'app_blog/base_new.html' %}
+Загрузка родительского шаблона:
+    Django находит и загружает base_new.html
+    Определяет блоки, доступные для переопределения
+    Построение дерева наследования:
+        base_new.html (родитель)
+        │
+        └── post_add.html (дочерний)
+4. Обработка блока content
+{% block content %} ... {% endblock %} - Django заменяет блок в родительском шаблоне содержимым из дочернего шаблона.
+5. Генерация формы - ключевой этап
+Часть 1: CSRF Token - {% csrf_token %} Что генерируется:
+    <input type="hidden" name="csrfmiddlewaretoken" value="a1b2c3d4e5f6...">
+    Как это работает:
+        Django генерирует уникальный токен для каждой сессии
+        При POST-запросе middleware проверяет этот токен и защищает от межсайтовой подделки запросов
+Часть 2: Рендеринг полей формы - {{ form.as_p }}. Что происходит внутри:
+    Итерация по полям формы:
+    Django проходит через form.fields в порядке, определенном в классе формы
+    Для каждого поля создается HTML-разметка
+7. Финальная сборка HTML
+8. Отправка формы
+Хотя это выходит за рамки рендеринга, полезно понимать полный цикл:
+    Пользователь заполняет и отправляет форму
+    Django проверяет CSRF токен
+    Создается связанная форма с данными: form = PostForm(request.POST)
+    Валидация данных и сохранение или возврат ошибок
+
+Демонстрация:
+# views.py
+def post_new(request):
+    form = PostForm()
+    return render(request, 'app_blog/post_add.html', {'form': form})
+html
+<!-- template.html -->
+{{ form.as_p }}  <!-- Обращение к переменной 'form' из контекста -->
+
+Django не навязывает имена переменных. Вы сами выбираете:
+    Как назвать переменную в Python коде, например, banana > banana = PostForm()
+    Какой ключ использовать в словаре контекста, например, worksheet > {'worksheet': banana}
+    Главное - чтобы имя в контексте совпадало с именем в шаблоне: {'worksheet': banana} > {{ worksheet.as_p }}
+"""
+
