@@ -24,12 +24,12 @@
 <body>
     <header class="page-header">
         <div>
-            <a href="/" class="logo-link"><img src="{% static 'app_blog/images/ghostbusters-1.svg' %}" alt="Логотип" width="120"></a>
+            <a href="{% url 'new' %}" class="logo-link"><img src="{% static 'app_blog/images/ghostbusters-1.svg' %}" alt="Логотип" width="120"></a>
             <!-- <img> тег - для растровых и простых SVG изображений, которые не нужно стилизовать, для логотипов, фотографий, иллюстраций -->
             <!-- Ограничения: SVG сложно стилизовать через CSS, Нельзя менять цвет fill/stroke без фильтров -->
         </div>
         <div class="no-container">
-            <h1><a href="" class="site-title">My First Blog</a></h1>
+            <h1><a href="{% url 'new' %}" class="site-title">We Chat Blog</a></h1>
         </div>
         <div class='icon-container'>
             {% if user.is_authenticated %}
@@ -49,7 +49,7 @@
             <ul class="nav-list">
                 <li><a href="/new/">Home</a></li>
                 <li><a href="/about/">About</a></li>
-                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/blog/">Help</a></li>
                 <li><a href="/admin/">Admin</a></li>
             </ul>
             <!-- Блок переключения языка (он не является пунктом навигационного меню, поэтому его можно оставить как есть).

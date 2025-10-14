@@ -1,7 +1,19 @@
-{% extends "app_blog/base.html" %}
+{% extends "app_blog/base_new.html" %}
 
 {% block content %}
-<h1>{{ object.author }} </h1>
-<p>{{ object.title }}</p>
-<p>{{ object.text }}</p>
+    <h2 class="blog_header">{{ subtitle }}</h2>
+        <article class="post">
+            <section>
+                <h3>How to add a new post?</h3>
+                <p>Just press the {% include './icons/bootstrap-icons-1.11.3/journal-plus.svg' %} icon in the header section</p>
+            </section>
+            <section>
+                <h3>How to edit your post?</h3>
+                <p>Just press the {% include './icons/bootstrap-icons-1.11.3/journal-minus.svg' %} icon in the post view</p>
+            </section>
+            <section>
+                <h3>How to delete your post?</h3>
+                <p>Just press the {% include './icons/bootstrap-icons-1.11.3/journal-x.svg' %} icon in the post view</p>
+            </section>
+        </article>
 {% endblock %}

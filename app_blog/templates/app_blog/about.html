@@ -1,34 +1,15 @@
-{% extends "app_blog/base.html" %}
+{% extends "app_blog/base_new.html" %}
 
 {% block content %}
-<h1>This is "about" page</h1>
-<h3>{{ my_text|upper }}</h3>
-{{ request.user.is_authenticated }}
-<p>This is about this blog</p>
-
-{{ my_html }}
-{{ my_html|safe }}
-{{ my_html|striptags|slugify }}
-
-<p>
-    {{ my_text }}, {{ my_number}}, {{ my_list }}
-</p>
-
-<ul>
-    {% for item in my_list %}
-        {% if item == 456 %}
-            <li>{{ forloop.counter }} - {{ item|add:44 }}</li>
-            {% comment %}
-                `|add:44` is a filter that adds 44 to the value.
-                For single-line comments, you could also use: {# item|add:44 is a filter #}
-                This comment is indented to match the `if` block.
-            {% endcomment %}
-        {% elif item == "abc" %}
-            <li>This is not a number</li>
-        {% else %}
-            <li>{{ forloop.counter }} - {{ item }}</li>
-        {% endif %}
-    {% endfor %}
-</ul>
-
+    <h2 class="blog_header">{{ subtitle }}</h2>
+        <article class="post">
+            <section>
+                <h3>What is it for</h3>
+                <p>This is for private communication in case all other means of communication fail</p>
+            </section>
+            <section>
+                <h3>Who is it for</h3>
+                <p>This is just for a group of wonderful carefully selected people who can try this piece of ...</p>
+            </section>
+        </article>
 {% endblock %}

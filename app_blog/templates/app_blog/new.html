@@ -4,6 +4,9 @@
     <h2 class="blog_header">{{ subtitle }}</h2>
     {% for item in posts %} <!-- ← 'posts' это КЛЮЧ из context-словаря / item это каждый объект из posts_items c атрибутами -->
         <article class="post">
+            <div>
+                <p><em>Автор: {{ item.author }}</em></p>
+            </div>
             <time class="date">
                 {{ item.published_date }}   <!-- вывод атрибута published_date из posts_items -->
             </time>

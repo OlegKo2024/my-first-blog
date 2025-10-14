@@ -83,10 +83,7 @@ def contact_view(request, *args, **kwargs):
 def about_view(request, *args, **kwargs):
     #    return HttpResponse("<h1>Give me some break</h1")
     my_context = {
-        'my_text': 'this is about my blog for you',
-        'my_number': '+79067073192',
-        'my_list': [123, 456, 789, 'abc'],
-        'my_html': '<h2>Hello World</h2>'
+        'subtitle': 'About This Blog',
     }
     return render(request, 'app_blog/about.html', my_context)
 
@@ -95,9 +92,8 @@ def home_view(request, *args, **kwargs):
 
 
 def blog_detail_view(request):
-    obj = Post.objects.get(id=5)
     context = {
-        'object': obj
+        'subtitle': 'We Chat Blog Instructions',
     }
     return render(request, 'app_blog/blog.html', context)
 
