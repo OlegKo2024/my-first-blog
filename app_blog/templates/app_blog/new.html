@@ -10,7 +10,7 @@
             <time class="date">
                 {{ item.published_date }}   <!-- вывод атрибута published_date из posts_items -->
             </time>
-            <h2><a href="{% url 'post_detail' pk=item.pk %}" class="new-link">{{ item.title }}</a></h2>
+            <h2><a href="{% url 'post_detail' pk=item.pk %}" class="new-link" title="Detail View">{{ item.title }}</a></h2>
             <!-- Что это: Генерация URL-адреса по имени маршрута 'post_detail' с передачей первичного ключа.
             Результат: Абсолютный путь к странице конкретного поста
             Разберём по частям:
