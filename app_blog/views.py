@@ -91,7 +91,7 @@ def home_view(request, *args, **kwargs):
    return render(request, 'app_blog/home.html', {})
 
 
-def blog_detail_view(request):
+def blog_help(request):
     context = {
         'subtitle': 'We Chat Blog Instructions',
     }
@@ -167,7 +167,7 @@ def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         post.delete()  # ← Вот и всё удаление!
-        return redirect('new')  # Перенаправляем на список постов
+        return redirect('/')  # Перенаправляем на список постов
     return render(request, 'app_blog/post_delete.html', {'post': post})
 
 

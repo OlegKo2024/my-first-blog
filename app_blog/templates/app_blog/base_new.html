@@ -28,12 +28,12 @@
 <body>
     <header class="page-header">
         <div> <!-- <a> tag назначение: Создание гиперссылок для навигации -->
-            <a href="{% url 'new' %}" class="logo-link" title="Home"><img src="{% static 'app_blog/images/ghostbusters-1-logo-png-transparent.png' %}" alt="Логотип" width="100"></a>
+            <a href="/" class="logo-link" title="Home"><img src="{% static 'app_blog/images/ghostbusters-1-logo-png-transparent.png' %}" alt="Логотип" width="100"></a>
             <!-- <img> тег - для растровых и простых SVG изображений, которые не нужно стилизовать, для логотипов, фотографий, иллюстраций -->
             <!-- Ограничения: SVG сложно стилизовать через CSS, Нельзя менять цвет fill/stroke без фильтров -->
         </div>
         <div class="no-container">
-            <h1 style="font-family: Papyrus; font-weight: bold;"><a href="{% url 'new' %}" class="site-title" title="Home">We Chat Blog</a></h1>
+            <h1 style="font-family: Papyrus; font-weight: bold;"><a href="/" class="site-title" title="Home">We Chat Blog</a></h1>
         </div>
         <div class='icon-container'>
             {% if user.is_authenticated %}
@@ -51,9 +51,9 @@
         <nav class="navigation">
             <!-- Основное меню как список (хорошая практика для доступности) -->
             <ul class="nav-list">
-                <li><a href="/new/">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="/about/">About</a></li>
-                <li><a href="/blog/">Help</a></li>
+                <li><a href="/help/">Help</a></li>
                 <li><a href="/admin/">Admin</a></li>
             </ul>
             <!-- Блок переключения языка (он не является пунктом навигационного меню, поэтому его можно оставить как есть).
