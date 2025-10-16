@@ -1,7 +1,7 @@
 {% extends "app_blog/base_new.html" %}
 
 {% block content %}
-    <h1 class="blog_header">{{ subtitle }}</h1>
+    <h1 class="blog_header" style="background-color: #c3c370; padding: 0 0 0 10px;">{{ subtitle }}</h1>
     {% for item in posts %} <!-- ← 'posts' это КЛЮЧ из context-словаря / item это каждый объект из posts_items c атрибутами -->
         <article class="post">
             <div>
