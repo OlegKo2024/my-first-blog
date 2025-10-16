@@ -200,9 +200,11 @@ cursive браузер понимает это так: Попробуй загр
 
 .blog_header {
     color: #ffffff;
-    font-size: 1.5rem;
+    font-size: 3rem;
     /* rem = "root em" - зависит от размера шрифта корневого элемента (<html>)
     По умолчанию в браузерах: 1rem = 16px. Поэтому: 3rem = 3 × 16px = 48px */
+    /*font-family: Papyrus;
+    font-weight: bold;*/
     display: flex;
     margin-left: 0px;
     margin-bottom: 30px;

@@ -111,7 +111,7 @@ def html_rules(request):
 def new(request):
     posts_items = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date') # ← Переменная Python (QuerySet)
     context = {
-        'subtitle': 'LIST OF POSTS',
+        'subtitle': 'Posts List',
         'posts': posts_items    # ← КЛЮЧ 'posts' : ЗНАЧЕНИЕ posts_items, который идет в new.html как связь в {% for item in posts %} - иначе не работает
     }
     return render(request, 'app_blog/new.html', context) # вместо переменной context можно в returns дать {'posts': posts_items})
